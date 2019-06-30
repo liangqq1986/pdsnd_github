@@ -207,7 +207,9 @@ def display_rawdata(df):
     df =df.rename({'Unnamed: 0':'Transaction ID'}, axis=1)
     row = 0
     while True:
-       display_rawdata = input('Would you like to see five lines of City Data? ')
+       display_rawdata = input('Would you like to see five lines of City Data? Enter yes or no')
+       if display_rawdata.lower() not in ['yes','no']:
+           print("Please check your input")
        if display_rawdata.lower() == 'yes':
            print(df.loc[row: row+4,'Transaction ID':'hour'])
            row += 5
