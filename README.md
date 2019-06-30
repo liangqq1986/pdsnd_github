@@ -5,7 +5,8 @@ June 29 2019
 Udacity Git Project
 
 ### Description
-Practice Git commands and complete a project
+Practice Git commands
+Complete a project
 
 ### Files used
 .gitignore
