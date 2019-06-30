@@ -178,37 +178,29 @@ def user_stats(df):
     start_time = time.time()
 
     # TO DO: Display counts of user types
-    df['User Type']= df['User Type'].dropna(axis=0)
-    count_user_type = df['User Type'].value_counts()
-    print('Total Count of User Type:', count_user_type)
+    try:
+        df['User Type']= df['User Type'].dropna(axis=0)
+        count_user_type = df['User Type'].value_counts()
+        print('Total Count of User Type:', count_user_type)
     # TO DO: Display counts of gender
-    df['Gender']= df['Gender'].dropna(axis=0)
-    count_gender = df['Gender'].value_counts()
-    print('Total Count of Gender:', count_gender)
+        df['Gender']= df['Gender'].dropna(axis=0)
+        count_gender = df['Gender'].value_counts()
+        print('Total Count of Gender:', count_gender)
     # TO DO: Display earliest, most recent, and most common year of birth
-    earliest_year = df['Birth Year'].min()
-    morst_recent_year = df['Birth Year'].max()
-    popular_birth_year = df['Birth Year'].mode()[0]
-    print('Earliest:', earliest_year)
-    print('Most Recent Year:', morst_recent_year)
-    print('Birth Year:', popular_birth_year)
+        earliest_year = df['Birth Year'].min()
+        morst_recent_year = df['Birth Year'].max()
+        popular_birth_year = df['Birth Year'].mode()[0]
+        print('Earliest:', earliest_year)
+        print('Most Recent Year:', morst_recent_year)
+        print('Birth Year:', popular_birth_year)
+    except KeyError:
+        df['User Type']= df['User Type'].fillna(0)
+        count_user_type = df['User Type'].value_counts()
+        print('Total Count of User Type:', count_user_type)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-def user_stats1(df):
-    """Displays statistics on bikeshare users."""
-
-    print('\nCalculating User Stats...\n')
-    start_time = time.time()
-
-    # TO DO: Display counts of user types
-    df['User Type']= df['User Type'].fillna(0)
-    count_user_type = df['User Type'].value_counts()
-    print('Total Count of User Type:', count_user_type)
-
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
 
 def display_rawdata(df):
     # Display five lines of City Data
@@ -216,7 +208,9 @@ def display_rawdata(df):
     df =df.rename({'Unnamed: 0':'Transaction ID'}, axis=1)
     row = 0
     while True:
-       display_rawdata = input('Would you like to see five lines of City Data? ')
+       display_rawdata = input('Would you like to see five lines of City Data? Enter yes or no')
+       if display_rawdata.lower() not in ['yes','no']:
+           print("Please check your input")
        if display_rawdata.lower() == 'yes':
            print(df.loc[row: row+4,'Transaction ID':'hour'])
            row += 5
@@ -230,19 +224,12 @@ def main():
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
-        if city != 'Washington':
-            time_stats(df)
-            station_stats(df)
-            trip_duration_stats(df)
-            user_stats(df)
-            display_rawdata(df)
+        time_stats(df)
+        station_stats(df)
+        trip_duration_stats(df)
+        user_stats(df)
+        display_rawdata(df)
 
-        else:
-            time_stats(df)
-            station_stats(df)
-            trip_duration_stats(df)
-            user_stats1(df)
-            display_rawdata(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
