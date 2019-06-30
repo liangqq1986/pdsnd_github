@@ -211,6 +211,7 @@ def user_stats1(df):
     print('-'*40)
 
 def display_rawdata(df):
+    # Display five lines of City Data
     df = df.reset_index()
     df =df.rename({'Unnamed: 0':'Transaction ID'}, axis=1)
     row = 0
